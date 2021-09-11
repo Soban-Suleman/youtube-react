@@ -14,9 +14,9 @@
   width: 400px;
 }
 .item {
-  display: flex;
+  display: flex !important;
   cursor: pointer;
-  align-items: center;
+  align-items: center !important;
 }
 
 .item.item img {
