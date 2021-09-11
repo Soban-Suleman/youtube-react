@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import youtube from "./api/youtube";
+import "./App.css";
 
-function App() {
+// eslint-disable-next-line
+import { SearchBar, VideoDetails, VideoList } from "./components";
+const App = () => {
+  const [videos, setVideos] = useState([]);
+  const onVideoSearch = async (term) => {
+    try {
+      const response = await youtube.get("/search", {
+        params: { q: term },
+      });
+      setVideos(response?.data?.items);
+    } catch (err) {
+      console.log(err?.message);
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={"ui container"}>
+      <SearchBar onFormSubmit={onVideoSearch} />
+      <VideoList videos={videos} />
     </div>
   );
-}
+};
 
 export default App;
