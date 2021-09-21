@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import youtube from "./api/youtube";
 import "./App.css";
 
@@ -7,10 +7,14 @@ import { SearchBar, VideoDetails, VideoList } from "./components";
 const App = () => {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
+
+  useEffect(() => {
+    setSelectedVideo(videos[0]);
+  }, [videos]);
   const onVideoSearch = async (term) => {
     try {
       const response = await youtube.get("/search", {
-        params: { q: term || "buildings" },
+        params: { q: term },
       });
       setVideos(response?.data?.items);
       setSelectedVideo(videos[0]);
@@ -18,6 +22,10 @@ const App = () => {
       console.log(err?.message);
     }
   };
+  useEffect(() => {
+    onVideoSearch("React JS");
+    setSelectedVideo(videos[0]);
+  }, []);
   const onVideoSelect = (video) => {
     setSelectedVideo(video);
   };

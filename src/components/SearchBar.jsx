@@ -3,7 +3,7 @@ import { Input } from "antd";
 import { Row, Col } from "antd";
 import "../App.css";
 const { Search } = Input;
-const SearchBar = (props) => {
+const SearchBar = ({ onFormSubmit }) => {
   const [searchInput, setSearchInput] = useState("");
   const onInputChange = (e) => {
     setSearchInput(e.target.value);
@@ -11,7 +11,7 @@ const SearchBar = (props) => {
   const onSearch = (e) => {
     e.preventDefault();
     setSearchInput("");
-    props.onFormSubmit(searchInput);
+    onFormSubmit(searchInput);
   };
   return (
     <div className={"ui segment"}>
